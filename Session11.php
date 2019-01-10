@@ -20,4 +20,15 @@ class Session11
         }
         return false;
     }
+
+    public function generateSalt()
+    {
+        $charSet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charSetLength = strlen($charSet);
+        $randomSalt = '';
+        for ($i = 0; $i < 10; $i++) {
+            $randomSalt .= $charSet[rand(0, $charSetLength - 1)];
+        }
+        return $randomSalt;
+    }
 }
