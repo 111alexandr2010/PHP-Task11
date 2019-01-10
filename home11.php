@@ -7,91 +7,84 @@ $db = DB::pdo();
 $session = new Session11();
 $login = $session->get('login');
 
-
 $textQuery = 'SELECT visitTime, a.name animalName, nameRussian, d.name doctorName, paidAmount, comment   
           FROM visits v  INNER JOIN animals a  ON animalID = a.id  INNER JOIN doctors d  ON v.doctorId = d.id     
           INNER JOIN species s  ON a.species = s.id  INNER JOIN clients c  ON a.clientId = c.id  WHERE login = ';
 
 $sql = $textQuery.':login ORDER BY visitTime DESC';
 
-$sth = $db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-$sth->execute(array(':login' => $login));
-$queryData = $sth->fetchAll(PDO::FETCH_ASSOC);
-
-$arrayOrder = array(1, 1, 1, 1, 1, 1);
-
 if ($_GET['visitDate']) {
-    $arrayOrder[0] = ++$_SESSION['visitDate'];
-
-    if($arrayOrder[0] % 2 == 1) {
+    if($_SESSION['visitDate']) {
         $sql = $textQuery . ':login ORDER BY visitTime';
+        $_SESSION['visitDate'] = false;
     } else {
         $sql = $textQuery . ':login ORDER BY visitTime DESC';
+        $_SESSION['visitDate'] = true;
     }
 }
 
 if ($_GET['name']){
-    $arrayOrder[1] = ++$_SESSION['name'];
-
-    if($arrayOrder[1] % 3 == 1) {
+    if($_SESSION['name'] == 0 ) {
         $sql = $textQuery . ':login ORDER BY a.name';
-    } elseif($arrayOrder[1] % 3 == 2) {
+        $_SESSION['name']++;
+    } elseif($arrayOrder[1] == 1) {
         $sql = $textQuery . ':login ORDER BY a.name DESC';
+        $_SESSION['name']++;
     } else {
         $sql = $textQuery . ':login ORDER BY visitTime DESC';
-        $arrayOrder[0] = 1;
+        $_SESSION['name'] = 0;
     }
 }
 
 if ($_GET['species']){
-    $arrayOrder[2] = ++$_SESSION['species'];
-
-    if($arrayOrder[2] % 3 == 1) {
+    if($_SESSION['species'] == 0) {
         $sql = $textQuery . ':login ORDER BY nameRussian';
-    } elseif($arrayOrder[2] % 3 == 2) {
+        $_SESSION['species']++;
+    } elseif($_SESSION['species'] == 1) {
         $sql = $textQuery . ':login ORDER BY nameRussian DESC';
+        $_SESSION['species']++;
     } else {
         $sql = $textQuery . ':login ORDER BY visitTime DESC';
-        $arrayOrder[0] = 1;
+        $_SESSION['species'] = 0;
     }
 }
 
 if ($_GET['doctor']){
-    $arrayOrder[3] = ++$_SESSION['doctor'];
-
-    if($arrayOrder[3] % 3 == 1) {
+    if($_SESSION['doctor'] == 0) {
         $sql = $textQuery . ':login ORDER BY d.name';
-    } elseif($arrayOrder[3] % 3 == 2) {
+        $_SESSION['doctor']++;
+    } elseif($_SESSION['doctor'] == 1) {
         $sql = $textQuery . ':login ORDER BY d.name DESC';
+        $_SESSION['doctor']++;
     } else {
         $sql = $textQuery . ':login ORDER BY visitTime DESC';
-        $arrayOrder[0] = 1;
+        $_SESSION['doctor'] = 0;
     }
 }
 
 if ($_GET['paidAmount']){
-    $arrayOrder[4] = ++$_SESSION['paidAmount'];
-
-    if($arrayOrder[4] % 3 == 1) {
+    if($_SESSION['paidAmount'] == 0) {
         $sql = $textQuery . ':login ORDER BY paidAmount';
-    } elseif($arrayOrder[4] % 3 == 2) {
+        $_SESSION['paidAmount']++;
+    } elseif($_SESSION['paidAmount'] == 1) {
         $sql = $textQuery . ':login ORDER BY paidAmount DESC';
+        $_SESSION['paidAmount']++;
     } else {
         $sql = $textQuery . ':login ORDER BY visitTime DESC';
-        $arrayOrder[0] = 1;
+        $_SESSION['paidAmount'] = 0;
     }
 }
 
 if ($_GET['comment']){
-    $arrayOrder[5] = ++$_SESSION['comment'];
-
-    if($arrayOrder[5] % 3 == 1) {
+    if($_SESSION['comment'] == 0) {
         $sql = $textQuery . ':login ORDER BY comment';
-    } elseif($arrayOrder[5] % 3 == 2) {
+        $_SESSION['comment']++;
+    } elseif($_SESSION['comment'] == 1) {
         $sql = $textQuery . ':login ORDER BY comment DESC';
+        $_SESSION['comment']++;
     } else {
         $sql = $textQuery . ':login ORDER BY visitTime DESC';
-        $arrayOrder[0] = 1;
+        $_SESSION['comment'] = 0;
     }
 }
 
