@@ -23,15 +23,17 @@ if (!isset($_POST['login2'])) {
     } else {
         $session->set('login', $login);
 
-        if (!isset($_POST['pass2']) || !isset($_POST['pass3']) || ($_POST['pass2']) !== $_POST['pass3']) {
-            $error = 'Необходимо ввести и повторить "пароль" ';
+        if ($_POST['surname2'] == null || $_POST['name2'] == null) {
+            $error = 'Необходимо внести и фамилию и имя!';
         } else {
-            $pass2 = $_POST['pass2'];
+            $surname2 = $_POST['surname2'];
+            $name2 = $_POST['name2'];
+            $clientName2 = $surname2 . ' ' . $name2;
 
-            if ($_POST['surname2'] == null || $_POST['name2'] == null) {
-                $error = 'Необходимо внести и фамилию и имя!';
+            if ($_POST['pass2'] == null || $_POST['pass3'] == null || ($_POST['pass2']) !== $_POST['pass3']) {
+                $error = 'Необходимо ввести и повторить "пароль" ';
             } else {
-                $clientName2 = $_POST['surname2'] . ' ' . $_POST['name2'];
+                $pass2 = $_POST['pass2'];
                 $salt2 = $session->generateSalt();
                 $passHash2 = md5($pass2 . $salt2);
 
@@ -46,25 +48,26 @@ if (!isset($_POST['login2'])) {
         }
     }
 }
-//
+
 ?>
 <html>
 <body>
 <?php
-if ( isset($_POST['OK3']) ){?>
-    <p style="color:red;"><?= $error;?></p>
+if (isset($_POST['OK3'])) {
+    ?>
+    <p style="color:red;"><?= $error; ?></p>
 <?php }
 ?>
 <form method="post" action="/Task11/index111.php">
     <H2>Добро пожаловать на страницу регистрации на нашем сайте!</H2>
     <img src="https://avatarfiles.alphacoders.com/119/thumb-119518.jpg"><br/>
     <p><b>Пожалуйста, заполните эту форму: </b></p>
-    <p>Введите "логин" <input type="text" name="login2"></p>
+    <p>Введите "логин" <input type="text" name="login2" value="<?= $login; ?>"></p>
+    <p>Введите вашу фамилию <input type="text" name="surname2" value="<?= $surname2; ?>"></p>
+    <p>Введите ваше имя <input type="text" name="name2" value="<?= $name2; ?>"></p>
     <p>Введите "пароль" <input type="password" name="pass2"></p>
     <p>Повторите "пароль" <input type="password" name="pass3"></p>
-    <p>Введите вашу фамилию <input type="text" name="surname2"></p>
-    <p>Введите ваше имя <input type="text" name="name2"></p>
-    <p>Если вы заполнили все поля формы, нажмите эту кнопку <input type="submit" name ="OK3" value="ВВОД"></p>
+    <p>Если вы заполнили все поля формы, нажмите эту кнопку <input type="submit" name="OK3" value="ВВОД"></p>
 </form>
 </body>
 </html>

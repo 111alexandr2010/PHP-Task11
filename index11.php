@@ -66,10 +66,10 @@ if (isset($_POST['OK2'])) {
 <body>
 <form method="post" action="/Task11/index11.php">
     <p><b>Если вы уже зарегистрированы на нашем сайте, пожалуйста, заполните эту форму: </b></p>
-    <p>Введите "логин" <input type="text" name="login"></p>
+    <p>Введите "логин" <input type="text" name="login" value="<?=$login; ?>"></p>
     <p>Введите "пароль" <input type="password" name="pass"></p>
     <p>Для входа на сайт, пожалуйста, нажмите эту кнопку <input type="submit" name ="OK1" value="OK"></p>
-    <p>Для регистрации на сайте, пожалуйста, перейдите по этой ссылке <input type="submit" name ="OK2" value="ПЕРЕЙТИ"></p>
+    <p>Для регистрации перейдите по этой ссылке <input type="submit" name ="OK2" value="ПЕРЕЙТИ"></p>
 </form>
 <p style="color:red;"><?= $error;?></p>
 </body>
