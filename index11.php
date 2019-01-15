@@ -11,7 +11,6 @@ $session = new Session11();
 
 if (isset($_POST['login'])) {
     $login = $_POST['login'];
-
     $session->set('login', $login);
 
     $sql = 'SELECT * FROM clients WHERE login = :login';
@@ -35,24 +34,13 @@ if (isset($_POST['login'])) {
             $session->set('salt', $salt);
             $session->set('id', $id);
 
-            if (($session->checkPass($passwordHash, $pass, $salt)) === true) {
+            if (($session->checkPass($passwordHash)) === true) {
                 header('Location:/Task11/home11.php');
                 exit();
             } else {
                 $error = 'Не правильно ввели "пароль"!';
             }
         }
-    }
-}
-
-if (isset($_SESSION['login']) && isset($_SESSION['pass'])) {
-    $login = $session->get('login');
-    $pass = $session->get('pass');
-    $salt = $session->get('salt');
-
-    if ($session->checkPass($login, $pass, $salt) === true) {
-        header('Location:/Task11/home11.php');
-        exit();
     }
 }
 
