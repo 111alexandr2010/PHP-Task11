@@ -2,9 +2,6 @@
 
 class Session11
 {
-    //private $pass;
-    //private $salt;
-
     public function set($key, $value)
     {
         $_SESSION[$key] = $value;
@@ -25,7 +22,7 @@ class Session11
     }
 
     public function generateSalt()
-        
+
     {
         $charSet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charSetLength = strlen($charSet);
@@ -33,6 +30,6 @@ class Session11
         for ($i = 0; $i < 10; $i++) {
             $randomSalt .= $charSet[rand(0, $charSetLength - 1)];
         }
-        return $randomSalt; //$this->salt =
+        return $randomSalt;
     }
 }
